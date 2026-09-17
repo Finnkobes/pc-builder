@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Jouw PC - PC Builder</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+    <main class="container build-page">
+
+
+        {% if foutmelding %}
+
+
+            <div class="error-page">
+
+                <div class="error-page-icon">
+                    ⚠️
+                </div>
+
+                <h1>
+                    {{ fouttitel }}
+                </h1>
+
+                <p>
+                    {{ fouttekst }}
+                </p>
+
+
+                {% if ontbrekende_onderdelen %}
+
+                    <div class="missing-parts">
+
+                        <strong>
+                            Nog niet gekozen:
+                        </strong>
+
+                        {% for onderdeel in ontbrekende_onderdelen %}
+
+                            <span>
+                                • {{ onderdeel }}
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+
+                <a
+                    href="/"
+                    class="back-button"
+                >
+                    ← Terug naar PC Builder
+                </a>
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- ========================= -->
+            <!-- HEADER -->
+            <!-- ========================= -->
+
+            <div class="page-header">
+
+                <span class="header-icon">
+                    🖥️
+                </span>
+
+                <div>
+
+                    <h1>
+                        Jouw PC
+                    </h1>
+
+                    <p class="intro">
+                        Dit is jouw samengestelde computer.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- SAMENVATTING -->
+            <!-- ========================= -->
+
+            <div class="build-summary">
+
+                <div class="summary-item">
+
+                    <span>
+                        🔧
+                    </span>
+
+                    <div>
+
+                        <small>
+                            Onderdelen
+                        </small>
+
+                        <strong>
+                            7
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span>
+                        💰
+                    </span>
+
+                    <div>
+
+                        <small>
+                            Totaalprijs
+                        </small>
+
+                        <strong>
+                            €{{ "%.2f"|format(totaalprijs) }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span>
+
+                        {% if alles_compatibel %}
+                            ✅
+                        {% else %}
+                            ⚠️
+                        {% endif %}
+
+                    </span>
+
+                    <div>
+
+                        <small>
+                            Compatibiliteit
+                        </small>
+
+                        <strong>
+
+                            {% if alles_compatibel %}
+                                Compatibel
+                            {% else %}
+                                Controle nodig
+                            {% endif %}
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- ONDERDELEN -->
+            <!-- ========================= -->
+
+            <h2>
+                🔧 Onderdelen
+            </h2>
+
+
+            <div class="parts-grid">
+
+
+                <div class="result-card">
+
+                    <div class="part-icon">
+                        🧠
+                    </div>
+
+                    <div class="part-info">
+
+                        <strong>
+                            Processor
+                        </strong>
+
+                        <span>
+                            {{ keuzes.cpu }}
+                        </span>
+
+                    </div>
+
+                    <span class="price">
+                        €{{ "%.2f"|format(prijzen.cpu) }}
+                    </span>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <div class="part-icon">
+                        🎮
+                    </div>
+
+                    <div class="part-info">
+
+                        <strong>
+                            Videokaart
+                        </strong>
+
+                        <span>
+                            {{ keuzes.gpu }}
+                        </span>
+
+                    </div>
+
+                    <span class="price">
+                        €{{ "%.2f"|format(prijzen.gpu) }}
+                    </span>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <div class="part-icon">
+                        🧩
+                    </div>
+
+                    <div class="part-info">
+
+                        <strong>
+                            Moederbord
+                        </strong>
+
+                        <span>
+                            {{ keuzes.moederbord }}
+                        </span>
+
+                    </div>
+
+                    <span class="price">
+                        €{{ "%.2f"|format(prijzen.moederbord) }}
+                    </span>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <div class="part-icon">
+                        🧠
+                    </div>
+
+                    <div class="part-info">
+
+                        <strong>
+                            RAM
+                        </strong>
+
+                        <span>
+                            {{ keuzes.ram }}
+                        </span>
+
+                    </div>
+
+                    <span class="price">
+                        €{{ "%.2f"|format(prijzen.ram) }}
+                    </span>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <div class="part-icon">
+                        💾
+                    </div>
+
+                    <div class="part-info">
+
+                        <strong>
+                            Opslag
+                        </strong>
+
+                        <span>
+                            {{ keuzes.ssd }}
+                        </span>
+
+                    </div>
+
+                    <span class="price">
+                        €{{ "%.2f"|format(prijzen.ssd) }}
+                    </span>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <div class="part-icon">
+                        🔌
+                    </div>
+
+                    <div class="part-info">
+
+                        <strong>
+                            Voeding
+                        </strong>
+
+                        <span>
+                            {{ keuzes.voeding }}
+                        </span>
+
+                    </div>
+
+                    <span class="price">
+                        €{{ "%.2f"|format(prijzen.voeding) }}
+                    </span>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <div class="part-icon">
+                        🖥️
+                    </div>
+
+                    <div class="part-info">
+
+                        <strong>
+                            Behuizing
+                        </strong>
+
+                        <span>
+                            {{ keuzes.behuizing }}
+                        </span>
+
+                    </div>
+
+                    <span class="price">
+                        €{{ "%.2f"|format(prijzen.behuizing) }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- BUDGET -->
+            <!-- ========================= -->
+
+            {% if budget is not none %}
+
+                <h2>
+                    💰 Budget
+                </h2>
+
+
+                {% if binnen_budget %}
+
+                    <div class="budget-result budget-success">
+
+                        <div class="budget-icon">
+                            ✅
+                        </div>
+
+                        <div class="budget-content">
+
+                            <strong>
+                                Je zit binnen je budget!
+                            </strong>
+
+                            <span>
+                                Je budget is
+                                €{{ "%.2f"|format(budget) }}.
+                            </span>
+
+                            <span>
+                                Je houdt
+                                €{{ "%.2f"|format(verschil_budget) }}
+                                over.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                {% else %}
+
+                    <div class="budget-result budget-error">
+
+                        <div class="budget-icon">
+                            💸
+                        </div>
+
+                        <div class="budget-content">
+
+                            <strong>
+                                Je zit boven je budget
+                            </strong>
+
+                            <span>
+                                Je budget is
+                                €{{ "%.2f"|format(budget) }}.
+                            </span>
+
+                            <span>
+                                Je PC kost
+                                €{{ "%.2f"|format(totaalprijs) }}.
+                            </span>
+
+                            <span class="budget-warning">
+                                Je moet
+                                €{{ "%.2f"|format(-verschil_budget) }}
+                                besparen om binnen je budget te komen.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            {% endif %}
+
+
+            <!-- ========================= -->
+            <!-- COMPATIBILITEIT -->
+            <!-- ========================= -->
+
+            <h2>
+                🔍 Compatibiliteitscontrole
+            </h2>
+
+
+            <div class="compatibility-list">
+
+
+                {% if cpu_compatibel %}
+
+                    <div class="compatibility-card success">
+
+                        <strong>
+                            ✅ CPU + moederbord
+                        </strong>
+
+                        <span>
+                            De processor en het moederbord
+                            gebruiken dezelfde socket.
+                        </span>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="compatibility-card error">
+
+                        <strong>
+                            ❌ CPU + moederbord
+                        </strong>
+
+                        <span>
+                            De processor en het moederbord
+                            gebruiken verschillende sockets.
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if ram_compatibel %}
+
+                    <div class="compatibility-card success">
+
+                        <strong>
+                            ✅ RAM + moederbord
+                        </strong>
+
+                        <span>
+                            Het gekozen RAM-type past bij
+                            het moederbord.
+                        </span>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="compatibility-card error">
+
+                        <strong>
+                            ❌ RAM + moederbord
+                        </strong>
+
+                        <span>
+                            Het gekozen RAM-type past niet
+                            bij het moederbord.
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if voeding_compatibel %}
+
+                    <div class="compatibility-card success">
+
+                        <strong>
+                            ✅ Voeding + GPU
+                        </strong>
+
+                        <span>
+                            De voeding heeft voldoende vermogen
+                            voor de videokaart.
+                        </span>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="compatibility-card error">
+
+                        <strong>
+                            ❌ Voeding + GPU
+                        </strong>
+
+                        <span>
+                            De voeding heeft onvoldoende vermogen
+                            voor de videokaart.
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if gpu_compatibel %}
+
+                    <div class="compatibility-card success">
+
+                        <strong>
+                            ✅ GPU + behuizing
+                        </strong>
+
+                        <span>
+                            De videokaart past in de gekozen
+                            behuizing.
+                        </span>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="compatibility-card error">
+
+                        <strong>
+                            ❌ GPU + behuizing
+                        </strong>
+
+                        <span>
+                            De videokaart is te lang voor
+                            de gekozen behuizing.
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- EINDRESULTAAT -->
+            <!-- ========================= -->
+
+            {% if alles_compatibel %}
+
+                <div class="final-result success">
+
+                    <div class="final-icon">
+                        ✅
+                    </div>
+
+                    <h2>
+                        PC is volledig compatibel!
+                    </h2>
+
+                    <p>
+                        Alle onderdelen die momenteel worden
+                        gecontroleerd kunnen met elkaar samenwerken.
+                    </p>
+
+                </div>
+
+            {% else %}
+
+                <div class="final-result error">
+
+                    <div class="final-icon">
+                        ⚠️
+                    </div>
+
+                    <h2>
+                        PC is niet volledig compatibel
+                    </h2>
+
+                    <p>
+                        Controleer de onderdelen met een rood kruis
+                        voordat je deze PC samenstelt.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- ========================= -->
+            <!-- TOTAALPRIJS -->
+            <!-- ========================= -->
+
+            <div class="total-price">
+
+                <div>
+
+                    <span>
+                        💰 Totaalprijs
+                    </span>
+
+                    <small>
+                        Inclusief alle 7 gekozen onderdelen
+                    </small>
+
+                </div>
+
+                <strong>
+                    €{{ "%.2f"|format(totaalprijs) }}
+                </strong>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- OPSLAAN -->
+            <!-- ========================= -->
+
+            <div class="save-build-section">
+
+                <h2>
+                    💾 Build opslaan
+                </h2>
+
+                <p>
+                    Sla deze PC op in je browser zodat je hem
+                    later opnieuw kunt bekijken.
+                </p>
+
+                <button
+                    type="button"
+                    id="saveBuildButton"
+                >
+                    💾 Build opslaan
+                </button>
+
+                <p
+                    id="saveMessage"
+                    class="save-message"
+                ></p>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- OPGESLAGEN BUILDS -->
+            <!-- ========================= -->
+
+            <div class="saved-builds-section">
+
+                <h2>
+                    📂 Opgeslagen builds
+                </h2>
+
+                <p>
+                    Bekijk eerder opgeslagen PC builds.
+                </p>
+
+                <div id="savedBuilds"></div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- ACTIEKNOPPEN -->
+            <!-- ========================= -->
+
+            <div class="build-actions">
+
+                <a
+                    href="{{ url_for(
+                        'home',
+                        cpu=keuzes.cpu,
+                        gpu=keuzes.gpu,
+                        moederbord=keuzes.moederbord,
+                        ram=keuzes.ram,
+                        ssd=keuzes.ssd,
+                        voeding=keuzes.voeding,
+                        behuizing=keuzes.behuizing,
+                        budget=budget
+                    ) }}"
+                    class="back-button"
+                >
+                    🔧 Build aanpassen
+                </a>
+
+
+                <a
+                    href="/"
+                    class="new-build-button"
+                >
+                    🆕 Nieuwe build
+                </a>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- COPYRIGHT -->
+            <!-- ========================= -->
+
+            <footer class="copyright">
+                © 2026 Finn Kobes — PC Builder
+            </footer>
+
+
+        {% endif %}
+
+    </main>
+
+
+    <script
+        src="{{ url_for('static', filename='script.js') }}"
+    ></script>
+
+</body>
+
+</html>

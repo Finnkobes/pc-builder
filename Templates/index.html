@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html lang="nl">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>PC Builder</title>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}"
+>
+```
+
+</head>
+
+<body>
+
+```
+<main class="container">
+
+    <h1>
+        🖥️ PC Builder
+    </h1>
+
+    <p class="intro">
+        Stel je eigen PC samen en controleer direct of
+        de onderdelen bij elkaar passen.
+    </p>
+
+
+    <!-- ========================= -->
+    <!-- SNELLE PRESETS -->
+    <!-- ========================= -->
+
+    <div class="presets-card">
+
+        <h2>
+            ⭐ Snelle presets
+        </h2>
+
+        <p>
+            Wil je snel een PC samenstellen?
+            Kies hieronder een voorbeeldconfiguratie.
+        </p>
+
+        <div class="preset-grid">
+
+            <button
+                type="button"
+                class="preset-button"
+                data-preset="budget"
+            >
+                💰 Budget PC
+            </button>
+
+            <button
+                type="button"
+                class="preset-button"
+                data-preset="gaming"
+            >
+                🎮 Gaming PC
+            </button>
+
+            <button
+                type="button"
+                class="preset-button"
+                data-preset="high-end"
+            >
+                🚀 High-end PC
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <form action="/build" method="POST">
+
+
+        <!-- ========================= -->
+        <!-- BUDGET -->
+        <!-- ========================= -->
+
+        <div class="budget-card">
+
+            <h2>
+                💰 Jouw budget
+            </h2>
+
+            <p>
+                Vul eventueel in hoeveel je maximaal wilt
+                uitgeven aan je PC.
+            </p>
+
+            <input
+                type="number"
+                name="budget"
+                placeholder="Bijvoorbeeld 1000"
+                min="1"
+                step="0.01"
+                value="{{ budget }}"
+            >
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- CPU -->
+        <!-- ========================= -->
+
+        <div class="component-card">
+
+            <h2>
+                🧠 Processor
+            </h2>
+
+            <p>
+                Kies de processor voor je PC.
+            </p>
+
+            <select
+                name="cpu"
+                id="cpu"
+                required
+            >
+
+                <option value="">
+                    Kies een processor
+                </option>
+
+                {% for onderdeel in onderdelen.cpu %}
+
+                    <option
+                        value="{{ onderdeel.naam }}"
+                        data-socket="{{ onderdeel.socket }}"
+
+                        {% if geselecteerd.cpu == onderdeel.naam %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ onderdeel.naam }} -
+                        €{{ "%.2f"|format(onderdeel.prijs) }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- GPU -->
+        <!-- ========================= -->
+
+        <div class="component-card">
+
+            <h2>
+                🎮 Videokaart
+            </h2>
+
+            <p>
+                Kies de videokaart voor je PC.
+            </p>
+
+            <select
+                name="gpu"
+                id="gpu"
+                required
+            >
+
+                <option value="">
+                    Kies een videokaart
+                </option>
+
+                {% for onderdeel in onderdelen.gpu %}
+
+                    <option
+                        value="{{ onderdeel.naam }}"
+                        data-min-voeding="{{ onderdeel.min_voeding }}"
+                        data-lengte="{{ onderdeel.lengte }}"
+
+                        {% if geselecteerd.gpu == onderdeel.naam %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ onderdeel.naam }} -
+                        €{{ "%.2f"|format(onderdeel.prijs) }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- MOEDERBORD -->
+        <!-- ========================= -->
+
+        <div class="component-card">
+
+            <h2>
+                🧩 Moederbord
+            </h2>
+
+            <p>
+                Kies een moederbord dat bij je processor past.
+            </p>
+
+            <select
+                name="moederbord"
+                id="moederbord"
+                required
+            >
+
+                <option value="">
+                    Kies een moederbord
+                </option>
+
+                {% for onderdeel in onderdelen.moederbord %}
+
+                    <option
+                        value="{{ onderdeel.naam }}"
+                        data-socket="{{ onderdeel.socket }}"
+                        data-ram-type="{{ onderdeel.ram_type }}"
+
+                        {% if geselecteerd.moederbord == onderdeel.naam %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ onderdeel.naam }} -
+                        €{{ "%.2f"|format(onderdeel.prijs) }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- RAM -->
+        <!-- ========================= -->
+
+        <div class="component-card">
+
+            <h2>
+                🧠 RAM
+            </h2>
+
+            <p>
+                Kies het werkgeheugen voor je PC.
+            </p>
+
+            <select
+                name="ram"
+                id="ram"
+                required
+            >
+
+                <option value="">
+                    Kies RAM
+                </option>
+
+                {% for onderdeel in onderdelen.ram %}
+
+                    <option
+                        value="{{ onderdeel.naam }}"
+                        data-ram-type="{{ onderdeel.ram_type }}"
+
+                        {% if geselecteerd.ram == onderdeel.naam %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ onderdeel.naam }} -
+                        €{{ "%.2f"|format(onderdeel.prijs) }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- SSD -->
+        <!-- ========================= -->
+
+        <div class="component-card">
+
+            <h2>
+                💾 Opslag
+            </h2>
+
+            <p>
+                Kies hoeveel opslagruimte je wilt.
+            </p>
+
+            <select
+                name="ssd"
+                required
+            >
+
+                <option value="">
+                    Kies opslag
+                </option>
+
+                {% for onderdeel in onderdelen.ssd %}
+
+                    <option
+                        value="{{ onderdeel.naam }}"
+
+                        {% if geselecteerd.ssd == onderdeel.naam %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ onderdeel.naam }} -
+                        €{{ "%.2f"|format(onderdeel.prijs) }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- VOEDING -->
+        <!-- ========================= -->
+
+        <div class="component-card">
+
+            <h2>
+                🔌 Voeding
+            </h2>
+
+            <p>
+                Kies een voeding met voldoende vermogen.
+            </p>
+
+            <select
+                name="voeding"
+                id="voeding"
+                required
+            >
+
+                <option value="">
+                    Kies een voeding
+                </option>
+
+                {% for onderdeel in onderdelen.voeding %}
+
+                    <option
+                        value="{{ onderdeel.naam }}"
+                        data-wattage="{{ onderdeel.wattage }}"
+
+                        {% if geselecteerd.voeding == onderdeel.naam %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ onderdeel.naam }} -
+                        €{{ "%.2f"|format(onderdeel.prijs) }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- BEHUIZING -->
+        <!-- ========================= -->
+
+        <div class="component-card">
+
+            <h2>
+                🖥️ Behuizing
+            </h2>
+
+            <p>
+                Kies een behuizing waar je videokaart in past.
+            </p>
+
+            <select
+                name="behuizing"
+                id="behuizing"
+                required
+            >
+
+                <option value="">
+                    Kies een behuizing
+                </option>
+
+                {% for onderdeel in onderdelen.behuizing %}
+
+                    <option
+                        value="{{ onderdeel.naam }}"
+                        data-max-gpu-lengte="{{ onderdeel.max_gpu_lengte }}"
+
+                        {% if geselecteerd.behuizing == onderdeel.naam %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ onderdeel.naam }} -
+                        €{{ "%.2f"|format(onderdeel.prijs) }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- VERSTUREN -->
+        <!-- ========================= -->
+
+        <button type="submit">
+
+            🛠️ PC samenstellen
+
+        </button>
+
+    </form>
+
+
+    <footer class="copyright">
+
+        © 2026 Finn Kobes — PC Builder
+
+    </footer>
+
+</main>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
+```
+
+</body>
+
+</html>
