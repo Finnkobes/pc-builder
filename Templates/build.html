@@ -2,7 +2,6 @@
 <html lang="nl">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -16,17 +15,13 @@
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}"
     >
-
 </head>
-
 
 <body>
 
     <main class="container build-page">
 
-
         {% if foutmelding %}
-
 
             <div class="error-page">
 
@@ -41,7 +36,6 @@
                 <p>
                     {{ fouttekst }}
                 </p>
-
 
                 {% if ontbrekende_onderdelen %}
 
@@ -63,7 +57,6 @@
 
                 {% endif %}
 
-
                 <a
                     href="/"
                     class="back-button"
@@ -73,13 +66,7 @@
 
             </div>
 
-
         {% else %}
-
-
-            <!-- ========================= -->
-            <!-- HEADER -->
-            <!-- ========================= -->
 
             <div class="page-header">
 
@@ -101,10 +88,6 @@
 
             </div>
 
-
-            <!-- ========================= -->
-            <!-- SAMENVATTING -->
-            <!-- ========================= -->
 
             <div class="build-summary">
 
@@ -153,13 +136,11 @@
                 <div class="summary-item">
 
                     <span>
-
                         {% if alles_compatibel %}
                             ✅
                         {% else %}
                             ⚠️
                         {% endif %}
-
                     </span>
 
                     <div>
@@ -169,13 +150,11 @@
                         </small>
 
                         <strong>
-
                             {% if alles_compatibel %}
                                 Compatibel
                             {% else %}
                                 Controle nodig
                             {% endif %}
-
                         </strong>
 
                     </div>
@@ -185,17 +164,12 @@
             </div>
 
 
-            <!-- ========================= -->
-            <!-- ONDERDELEN -->
-            <!-- ========================= -->
-
             <h2>
                 🔧 Onderdelen
             </h2>
 
 
             <div class="parts-grid">
-
 
                 <div class="result-card">
 
@@ -371,20 +345,14 @@
 
                 </div>
 
-
             </div>
 
-
-            <!-- ========================= -->
-            <!-- BUDGET -->
-            <!-- ========================= -->
 
             {% if budget is not none %}
 
                 <h2>
                     💰 Budget
                 </h2>
-
 
                 {% if binnen_budget %}
 
@@ -414,7 +382,6 @@
                         </div>
 
                     </div>
-
 
                 {% else %}
 
@@ -455,17 +422,12 @@
             {% endif %}
 
 
-            <!-- ========================= -->
-            <!-- COMPATIBILITEIT -->
-            <!-- ========================= -->
-
             <h2>
                 🔍 Compatibiliteitscontrole
             </h2>
 
 
             <div class="compatibility-list">
-
 
                 {% if cpu_compatibel %}
 
@@ -598,13 +560,8 @@
 
                 {% endif %}
 
-
             </div>
 
-
-            <!-- ========================= -->
-            <!-- EINDRESULTAAT -->
-            <!-- ========================= -->
 
             {% if alles_compatibel %}
 
@@ -647,10 +604,6 @@
             {% endif %}
 
 
-            <!-- ========================= -->
-            <!-- TOTAALPRIJS -->
-            <!-- ========================= -->
-
             <div class="total-price">
 
                 <div>
@@ -671,10 +624,6 @@
 
             </div>
 
-
-            <!-- ========================= -->
-            <!-- OPSLAAN -->
-            <!-- ========================= -->
 
             <div class="save-build-section">
 
@@ -702,10 +651,6 @@
             </div>
 
 
-            <!-- ========================= -->
-            <!-- OPGESLAGEN BUILDS -->
-            <!-- ========================= -->
-
             <div class="saved-builds-section">
 
                 <h2>
@@ -720,10 +665,6 @@
 
             </div>
 
-
-            <!-- ========================= -->
-            <!-- ACTIEKNOPPEN -->
-            <!-- ========================= -->
 
             <div class="build-actions">
 
@@ -755,14 +696,9 @@
             </div>
 
 
-            <!-- ========================= -->
-            <!-- COPYRIGHT -->
-            <!-- ========================= -->
-
             <footer class="copyright">
                 © 2026 Finn Kobes — PC Builder
             </footer>
-
 
         {% endif %}
 

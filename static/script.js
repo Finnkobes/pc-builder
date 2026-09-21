@@ -18,52 +18,37 @@ document.addEventListener("DOMContentLoaded", function () {
         const gekozenCpu =
             cpuSelect.options[cpuSelect.selectedIndex];
 
-
         if (!gekozenCpu || gekozenCpu.value === "") {
             return;
         }
 
-
         const cpuSocket =
             gekozenCpu.dataset.socket;
-
 
         for (let i = 0; i < moederbordSelect.options.length; i++) {
 
             const optie =
                 moederbordSelect.options[i];
 
-
             if (optie.value === "") {
-
                 optie.hidden = false;
                 optie.disabled = false;
-
                 continue;
             }
-
 
             const moederbordSocket =
                 optie.dataset.socket;
 
-
             if (moederbordSocket === cpuSocket) {
-
                 optie.hidden = false;
                 optie.disabled = false;
-
             } else {
-
                 optie.hidden = true;
                 optie.disabled = true;
-
             }
-
         }
 
-
         moederbordSelect.value = "";
-
 
         filterRam();
     }
@@ -79,7 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
             moederbordSelect.options[
                 moederbordSelect.selectedIndex
             ];
-
 
         if (
             !gekozenMoederbord ||
@@ -97,7 +81,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 optie.hidden = false;
                 optie.disabled = false;
-
             }
 
             ramSelect.value = "";
@@ -105,10 +88,8 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         const ramType =
             gekozenMoederbord.dataset.ramType;
-
 
         for (
             let i = 0;
@@ -119,34 +100,23 @@ document.addEventListener("DOMContentLoaded", function () {
             const optie =
                 ramSelect.options[i];
 
-
             if (optie.value === "") {
-
                 optie.hidden = false;
                 optie.disabled = false;
-
                 continue;
             }
-
 
             const optieRamType =
                 optie.dataset.ramType;
 
-
             if (optieRamType === ramType) {
-
                 optie.hidden = false;
                 optie.disabled = false;
-
             } else {
-
                 optie.hidden = true;
                 optie.disabled = true;
-
             }
-
         }
-
 
         ramSelect.value = "";
     }
@@ -161,15 +131,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const gekozenGpu =
             gpuSelect.options[gpuSelect.selectedIndex];
 
-
         if (!gekozenGpu || gekozenGpu.value === "") {
             return;
         }
 
-
         const minimaleVoeding =
             Number(gekozenGpu.dataset.minVoeding);
-
 
         for (
             let i = 0;
@@ -180,34 +147,23 @@ document.addEventListener("DOMContentLoaded", function () {
             const optie =
                 voedingSelect.options[i];
 
-
             if (optie.value === "") {
-
                 optie.hidden = false;
                 optie.disabled = false;
-
                 continue;
             }
-
 
             const wattage =
                 Number(optie.dataset.wattage);
 
-
             if (wattage >= minimaleVoeding) {
-
                 optie.hidden = false;
                 optie.disabled = false;
-
             } else {
-
                 optie.hidden = true;
                 optie.disabled = true;
-
             }
-
         }
-
 
         voedingSelect.value = "";
     }
@@ -222,15 +178,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const gekozenGpu =
             gpuSelect.options[gpuSelect.selectedIndex];
 
-
         if (!gekozenGpu || gekozenGpu.value === "") {
             return;
         }
 
-
         const gpuLengte =
             Number(gekozenGpu.dataset.lengte);
-
 
         for (
             let i = 0;
@@ -241,34 +194,23 @@ document.addEventListener("DOMContentLoaded", function () {
             const optie =
                 behuizingSelect.options[i];
 
-
             if (optie.value === "") {
-
                 optie.hidden = false;
                 optie.disabled = false;
-
                 continue;
             }
-
 
             const maximaleLengte =
                 Number(optie.dataset.maxGpuLengte);
 
-
             if (maximaleLengte >= gpuLengte) {
-
                 optie.hidden = false;
                 optie.disabled = false;
-
             } else {
-
                 optie.hidden = true;
                 optie.disabled = true;
-
             }
-
         }
-
 
         behuizingSelect.value = "";
     }
@@ -279,45 +221,22 @@ document.addEventListener("DOMContentLoaded", function () {
     // ==========================================
 
     if (cpuSelect) {
-
-        cpuSelect.addEventListener(
-            "change",
-            function () {
-
-                filterMoederborden();
-
-            }
-        );
-
+        cpuSelect.addEventListener("change", function () {
+            filterMoederborden();
+        });
     }
-
 
     if (moederbordSelect) {
-
-        moederbordSelect.addEventListener(
-            "change",
-            function () {
-
-                filterRam();
-
-            }
-        );
-
+        moederbordSelect.addEventListener("change", function () {
+            filterRam();
+        });
     }
 
-
     if (gpuSelect) {
-
-        gpuSelect.addEventListener(
-            "change",
-            function () {
-
-                filterVoeding();
-                filterBehuizing();
-
-            }
-        );
-
+        gpuSelect.addEventListener("change", function () {
+            filterVoeding();
+            filterBehuizing();
+        });
     }
 
 
@@ -337,7 +256,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return {
 
             cpu: cpuSelect ? cpuSelect.value : "",
+
             gpu: gpuSelect ? gpuSelect.value : "",
+
             moederbord:
                 moederbordSelect
                     ? moederbordSelect.value
@@ -370,9 +291,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             datum:
                 new Date().toLocaleString("nl-NL")
-
         };
-
     }
 
 
@@ -381,16 +300,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const builds =
             localStorage.getItem("pcBuilderBuilds");
 
-
         if (!builds) {
             return [];
         }
 
-
         try {
-
             return JSON.parse(builds);
-
         } catch (error) {
 
             console.error(
@@ -399,9 +314,7 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
             return [];
-
         }
-
     }
 
 
@@ -410,19 +323,15 @@ document.addEventListener("DOMContentLoaded", function () {
         const build =
             getCurrentBuild();
 
-
         const builds =
             getSavedBuilds();
 
-
         builds.push(build);
-
 
         localStorage.setItem(
             "pcBuilderBuilds",
             JSON.stringify(builds)
         );
-
 
         if (saveMessage) {
 
@@ -431,12 +340,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             saveMessage.className =
                 "save-message success";
-
         }
 
-
         showSavedBuilds();
-
     }
 
 
@@ -446,7 +352,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             saveBuild
         );
-
     }
 
 
@@ -464,13 +369,10 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         const builds =
             getSavedBuilds();
 
-
         savedBuildsContainer.innerHTML = "";
-
 
         if (builds.length === 0) {
 
@@ -561,7 +463,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     build.budget;
 
                 parts.appendChild(budget);
-
             }
 
 
@@ -588,9 +489,7 @@ document.addEventListener("DOMContentLoaded", function () {
             loadButton.addEventListener(
                 "click",
                 function () {
-
                     loadBuild(build);
-
                 }
             );
 
@@ -611,9 +510,7 @@ document.addEventListener("DOMContentLoaded", function () {
             deleteButton.addEventListener(
                 "click",
                 function () {
-
                     deleteBuild(index);
-
                 }
             );
 
@@ -621,19 +518,15 @@ document.addEventListener("DOMContentLoaded", function () {
             actions.appendChild(loadButton);
             actions.appendChild(deleteButton);
 
-
             buildCard.appendChild(title);
             buildCard.appendChild(date);
             buildCard.appendChild(parts);
             buildCard.appendChild(actions);
 
-
             savedBuildsContainer.appendChild(
                 buildCard
             );
-
         });
-
     }
 
 
@@ -647,16 +540,13 @@ document.addEventListener("DOMContentLoaded", function () {
             cpuSelect.value = build.cpu;
         }
 
-
         if (moederbordSelect) {
 
             filterMoederbordenWithoutReset();
 
             moederbordSelect.value =
                 build.moederbord;
-
         }
-
 
         if (ramSelect) {
 
@@ -664,14 +554,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             ramSelect.value =
                 build.ram;
-
         }
-
 
         if (gpuSelect) {
             gpuSelect.value = build.gpu;
         }
-
 
         if (voedingSelect) {
 
@@ -679,9 +566,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             voedingSelect.value =
                 build.voeding;
-
         }
-
 
         if (behuizingSelect) {
 
@@ -689,31 +574,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
             behuizingSelect.value =
                 build.behuizing;
-
         }
-
 
         const ssdSelect =
             document.querySelector(
                 'select[name="ssd"]'
             );
 
-
         if (ssdSelect) {
             ssdSelect.value = build.ssd;
         }
-
 
         const budgetInput =
             document.querySelector(
                 'input[name="budget"]'
             );
 
-
         if (budgetInput) {
             budgetInput.value = build.budget;
         }
-
 
         if (saveMessage) {
 
@@ -722,15 +601,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             saveMessage.className =
                 "save-message success";
-
         }
-
 
         window.scrollTo({
             top: 0,
             behavior: "smooth"
         });
-
     }
 
 
@@ -744,21 +620,17 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         const gekozenCpu =
             cpuSelect.options[
                 cpuSelect.selectedIndex
             ];
 
-
         if (!gekozenCpu || gekozenCpu.value === "") {
             return;
         }
 
-
         const cpuSocket =
             gekozenCpu.dataset.socket;
-
 
         for (
             let i = 0;
@@ -769,11 +641,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const optie =
                 moederbordSelect.options[i];
 
-
             if (optie.value === "") {
                 continue;
             }
-
 
             if (
                 optie.dataset.socket ===
@@ -787,11 +657,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 optie.hidden = true;
                 optie.disabled = true;
-
             }
-
         }
-
     }
 
 
@@ -801,12 +668,10 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         const gekozenMoederbord =
             moederbordSelect.options[
                 moederbordSelect.selectedIndex
             ];
-
 
         if (
             !gekozenMoederbord ||
@@ -815,10 +680,8 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         const ramType =
             gekozenMoederbord.dataset.ramType;
-
 
         for (
             let i = 0;
@@ -829,11 +692,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const optie =
                 ramSelect.options[i];
 
-
             if (optie.value === "") {
                 continue;
             }
-
 
             if (
                 optie.dataset.ramType ===
@@ -847,11 +708,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 optie.hidden = true;
                 optie.disabled = true;
-
             }
-
         }
-
     }
 
 
@@ -861,23 +719,19 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         const gekozenGpu =
             gpuSelect.options[
                 gpuSelect.selectedIndex
             ];
 
-
         if (!gekozenGpu || gekozenGpu.value === "") {
             return;
         }
-
 
         const minimaleVoeding =
             Number(
                 gekozenGpu.dataset.minVoeding
             );
-
 
         for (
             let i = 0;
@@ -888,15 +742,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const optie =
                 voedingSelect.options[i];
 
-
             if (optie.value === "") {
                 continue;
             }
 
-
             const wattage =
                 Number(optie.dataset.wattage);
-
 
             if (wattage >= minimaleVoeding) {
 
@@ -907,11 +758,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 optie.hidden = true;
                 optie.disabled = true;
-
             }
-
         }
-
     }
 
 
@@ -921,23 +769,19 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
         const gekozenGpu =
             gpuSelect.options[
                 gpuSelect.selectedIndex
             ];
 
-
         if (!gekozenGpu || gekozenGpu.value === "") {
             return;
         }
-
 
         const gpuLengte =
             Number(
                 gekozenGpu.dataset.lengte
             );
-
 
         for (
             let i = 0;
@@ -948,17 +792,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const optie =
                 behuizingSelect.options[i];
 
-
             if (optie.value === "") {
                 continue;
             }
-
 
             const maximaleLengte =
                 Number(
                     optie.dataset.maxGpuLengte
                 );
-
 
             if (maximaleLengte >= gpuLengte) {
 
@@ -969,11 +810,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 optie.hidden = true;
                 optie.disabled = true;
-
             }
-
         }
-
     }
 
 
@@ -986,18 +824,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const builds =
             getSavedBuilds();
 
-
         builds.splice(index, 1);
-
 
         localStorage.setItem(
             "pcBuilderBuilds",
             JSON.stringify(builds)
         );
 
-
         showSavedBuilds();
-
 
         if (saveMessage) {
 
@@ -1006,9 +840,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             saveMessage.className =
                 "save-message success";
-
         }
-
     }
 
 
@@ -1022,14 +854,12 @@ document.addEventListener("DOMContentLoaded", function () {
             return "";
         }
 
-
         return String(text)
             .replaceAll("&", "&amp;")
             .replaceAll("<", "&lt;")
             .replaceAll(">", "&gt;")
             .replaceAll('"', "&quot;")
             .replaceAll("'", "&#039;");
-
     }
 
 
@@ -1042,7 +872,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!select) {
             return false;
         }
-
 
         for (
             let i = 0;
@@ -1058,14 +887,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 select.selectedIndex = i;
 
                 return true;
-
             }
-
         }
 
-
         return false;
-
     }
 
 
@@ -1117,7 +942,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 ),
                 "Kingston 500GB SATA SSD"
             );
-
         }
 
 
@@ -1167,7 +991,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 ),
                 "Samsung 1TB 990 EVO NVMe"
             );
-
         }
 
 
@@ -1217,30 +1040,28 @@ document.addEventListener("DOMContentLoaded", function () {
                 ),
                 "Samsung 2TB 990 EVO NVMe"
             );
-
         }
 
 
+        // Huidige totaalprijzen van de presets
         const presetBudget =
             document.querySelector(
                 'input[name="budget"]'
             );
 
-
         if (presetBudget) {
 
             if (preset === "budget") {
-                presetBudget.value = "700";
+                presetBudget.value = "750";
             }
 
             if (preset === "gaming") {
-                presetBudget.value = "1500";
+                presetBudget.value = "1850";
             }
 
             if (preset === "high-end") {
-                presetBudget.value = "2500";
+                presetBudget.value = "3100";
             }
-
         }
 
 
@@ -1253,9 +1074,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             saveMessage.className =
                 "save-message success";
-
         }
-
     }
 
 
@@ -1274,7 +1093,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         return "PC";
-
     }
 
 
@@ -1287,7 +1105,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "[data-preset]"
         );
 
-
     presetButtons.forEach(function (button) {
 
         button.addEventListener(
@@ -1297,10 +1114,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 applyPreset(
                     button.dataset.preset
                 );
-
             }
         );
-
     });
 
 
