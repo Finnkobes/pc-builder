@@ -18,14 +18,9 @@ Tijdens dit project wilde ik de volgende dingen leren en verbeteren:
 
 - Werken met Python en Flask.
 - Een webapplicatie maken met HTML, CSS en JavaScript.
-- Werken met variabelen, lijsten, functies en voorwaarden.
-- PC-onderdelen verwerken in een applicatie.
-- Een totaalprijs van een PC berekenen.
 - Controleren of verschillende PC-onderdelen met elkaar compatibel zijn.
 - Een gebruiksvriendelijke website maken.
-- Mijn applicatie testen en fouten oplossen.
-- Werken met Git en GitHub.
-- Mijn project goed documenteren.
+
 
 Mijn quote voor dit project was:
 
